@@ -1,12 +1,10 @@
 ![](docs/images/logo.png)
 
-[![Downloads](https://img.shields.io/badge/dynamic/json?color=green&label=Downloads&query=totalString&url=https%3A%2F%2Fraw.githubusercontent.com%2Ftopjohnwu%2Fmagisk-files%2Fcount%2Fcount.json&cacheSeconds=1800)](https://raw.githubusercontent.com/topjohnwu/magisk-files/count/count.json)
-
-#### This is not an officially supported Google product
+#### This is not an officially supported Google product and is not endorsed by topjohnwu or HuskyDG.
 
 ## Introduction
 
-Magisk is a suite of open source software for customizing Android, supporting devices higher than Android 6.0.<br>
+Magisk Zygote64_32 is a modification of Magisk, which is a suite of software primarily designed as a root solution for multilib Android devices that are Zygote64 only.<br>
 Some highlight features:
 
 - **MagiskSU**: Provide root access for applications
@@ -14,9 +12,31 @@ Some highlight features:
 - **MagiskBoot**: The most complete tool for unpacking and repacking Android boot images
 - **Zygisk**: Run code in every Android applications' processes
 
+Added with [Magisk Zygote64_32](https://github.com/Namelesswonder/Magisk/tree/32bit) is:
+
+- **Zygote64_32**: Enables secondary Zygote process to allow 32-bit applications to start
+
+Further added with [Magisk Delta 32-bit](https://github.com/Namelesswonder/Magisk/tree/delta-32bit) is:
+
+- **early-mount.d**: Mount files before the init process is ran
+- **init.rc injection**: Inject rc scripts without having to rebuild the initrd
+- **Systemless file removal**: Remove file and folders systemlessly
+- **SuList**: Hides Magisk binaries by default and only whitelisted processes can use Magisk
+- **Maru**: Zygisk implementation using Native Bridge
+
+Currently only the Pixel 7 and Pixel 7 Pro are officially supported by this project.
+
+Currently only Magisk Zygote64_32 has full support, with Magisk Delta 32-bit being offered _as-is_.
+
+## Sources
+
+The sources for [Magisk Zygote64_32 are available on the page you are reading this from right now](https://github.com/Namelesswonder/Magisk/tree/32bit).
+
+The sources for [Magisk Delta 32-bit are available in the delta-32bit branch](https://github.com/Namelesswonder/Magisk/tree/delta-32bit).
+
 ## Downloads
 
-[Github](https://github.com/topjohnwu/Magisk/releases) is the only source where you can get official Magisk information and downloads.
+[My GitHub download repository](https://github.com/Namelesswonder/magisk-files) has the downloads of the Magisk app for both Magisk Zygote64_32 and Magisk Delta 32-bit.
 
 ## Useful Links
 
@@ -27,11 +47,10 @@ Some highlight features:
 
 ## Bug Reports
 
-**Only bug reports from Debug builds will be accepted.**
+**Only bug reports from Magisk Zygote64_32 builds will be accepted, as I am not running Magisk Delta 32-bit**
 
 For installation issues, upload both boot image and install logs.<br>
-For Magisk issues, upload boot logcat or dmesg.<br>
-For Magisk app crashes, record and upload the logcat when the crash occurs.
+For bootloops or Magisk issues, upload boot logcat or dmesg.<br>
 
 ## Translation Contributions
 
