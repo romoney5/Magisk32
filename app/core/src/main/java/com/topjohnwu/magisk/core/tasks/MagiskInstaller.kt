@@ -157,6 +157,17 @@ abstract class MagiskInstallImpl protected constructor(
                         val magisk32 = File(installDir, "magisk32")
                         entry.writeTo(magisk32)
                     }
+                } else {
+                    // Copy magisk32 from base APK if the native library isn't available
+                    val zf = ZipFile(context.applicationInfo.sourceDir)
+                    val dest = File(installDir, "magisk32")
+                    zf.getInputStream(zf.getEntry("lib/$abi32/libmagisk.so")).writeTo(dest) //romoney5: should this use $abi32?
+                    zf.close()
+                }
+
+                if (!File(installDir, "magisk32").exists()) {
+                    console.add("! magisk32 binary not found")
+                    return false
                 }
             }
 
