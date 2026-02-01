@@ -101,13 +101,20 @@ static bool patch_rc_scripts(const char *src_path, const char *tmp_path, bool wr
         rc_list.clear();
 
         if (access("/vendor/build.prop", F_OK) == 0) {
+			//romoney5: copied from init.rc code
+			auto src_dir_prop = xopen_dir("/vendor/build.prop");
+			if (!src_dir_prop) return false;
+			int src_fd_prop = dirfd(src_dir_prop.get());
+		    owned_fd src_prop = xopenat(src_fd_prop, "/vendor/build.prop", O_RDONLY | O_CLOEXEC, 0);
+		    if (src_prop < 0) return false;
+		    if (writable) unlinkat(src_fd_prop, "/vendor/build.prop", 0);
 
             xmkdirs(dirname(ROOTOVL "/vendor/build.prop"), 0755);
             FILE *tmp = xfopen(ROOTOVL "/vendor/build.prop", "we");
             if (!tmp) {
                 fprintf(dest_rc.get(), "\tsetprop ro.patch_status failed\n");
             } else {
-                file_readline("/vendor/build.prop", [=](Utf8CStr line) -> bool {
+                file_readline(src_prop, [=](Utf8CStr line) -> bool {
                     if (line.sv().starts_with("ro.zygote=zygote64")) {
                         fprintf(tmp, "ro.zygote=zygote64_32\n");
                         return true;
