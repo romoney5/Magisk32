@@ -107,7 +107,7 @@ static bool patch_rc_scripts(const char *src_path, const char *tmp_path, bool wr
             if (!tmp) {
                 fprintf(dest_rc.get(), "\tsetprop ro.patch_status failed\n");
             } else {
-                file_readline("/vendor/build.prop", [=](string_view line) -> bool {
+                file_readline("/vendor/build.prop", [=](Utf8CStr line) -> bool {
                     if (line.sv().starts_with("ro.zygote=zygote64")) {
                         fprintf(tmp, "ro.zygote=zygote64_32\n");
                         return true;
