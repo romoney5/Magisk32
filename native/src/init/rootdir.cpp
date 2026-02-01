@@ -108,17 +108,17 @@ static bool patch_rc_scripts(const char *src_path, const char *tmp_path, bool wr
                 fprintf(dest_rc.get(), "\tsetprop ro.patch_status failed\n");
             } else {
                 file_readline("/vendor/build.prop", [=](string_view line) -> bool {
-                    if (str_starts(line, "ro.zygote=zygote64")) {
+                    if (line.sv().starts_with("ro.zygote=zygote64")) {
                         fprintf(tmp, "ro.zygote=zygote64_32\n");
                         return true;
                     }
 
-                    if (str_starts(line, "ro.vendor.product.cpu.abilist=arm64-v8a")) {
+                    if (line.sv().starts_with("ro.vendor.product.cpu.abilist=arm64-v8a")) {
                         fprintf(tmp, "ro.vendor.product.cpu.abilist=arm64-v8a,armeabi-v7a,armeabi\n");
                         return true;
                     }
 
-                    if (str_starts(line, "ro.vendor.product.cpu.abilist32=")) {
+                    if (line.sv().starts_with("ro.vendor.product.cpu.abilist32=")) {
                         fprintf(tmp, "ro.vendor.product.cpu.abilist32=armeabi-v7a,armeabi\n");
                         return true;
                     }
