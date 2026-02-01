@@ -105,7 +105,7 @@ static bool patch_rc_scripts(const char *src_path, const char *tmp_path, bool wr
             xmkdirs(dirname(ROOTOVL "/vendor/build.prop"), 0755);
             FILE *tmp = xfopen(ROOTOVL "/vendor/build.prop", "we");
             if (!tmp) {
-                fprintf(rc, "\tsetprop ro.patch_status failed\n");
+                fprintf(dest_rc.get(), "\tsetprop ro.patch_status failed\n");
             } else {
                 file_readline("/vendor/build.prop", [=](string_view line) -> bool {
                     if (str_starts(line, "ro.zygote=zygote64")) {
