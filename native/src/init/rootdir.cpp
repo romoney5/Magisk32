@@ -108,8 +108,16 @@ static bool patch_rc_scripts(const char *src_path, const char *tmp_path, bool wr
 		    owned_fd src_prop = xopenat(src_fd_prop, "/vendor/build.prop", O_RDONLY | O_CLOEXEC, 0);
 		    if (src_prop < 0) return false;
 		    if (writable) unlinkat(src_fd_prop, "/vendor/build.prop", 0);
+			auto dest_dir = writable ? [&] {
+				return xopen_dir("/vendor/build.prop");
+			}() : [&] {
+				char buf[PATH_MAX] = {};
+				ssprintf(buf, sizeof(buf), ROOTOVL "%s", "/vendor/build.prop");
+				xmkdirs(buf, 0755);
+				return xopen_dir(buf);
+			}();
+			if (!dest_dir) return false;
 
-            xmkdirs(dirname(ROOTOVL "/vendor/build.prop"), 0755);
             FILE *tmp = xfopen(ROOTOVL "/vendor/build.prop", "we");
             if (!tmp) {
                 fprintf(dest_rc.get(), "\tsetprop ro.patch_status failed\n");
